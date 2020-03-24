@@ -35,15 +35,11 @@ steps:
 - task: Npm@1
   inputs:
     command: 'custom'
-    customCommand: 'npm run cy:verify'
+    customCommand: 'run cy:verify'
 - task: Npm@1
   inputs:
     command: 'custom'
-    customCommand: 'npm run cy:info'
+    customCommand: 'run cy:info'
 
 - script: |
-          npx print-env AGENT
-          npx print-env BUILD
-          npx print-env SYSTEM
-          npm run start:ci:windows &
-          npx cypress run --record --parallel --ci-build-id $BUILD_BUILDNUMBER --group "Azure CI"
+          npx cypress run --record --ci-build-id $BUILD_BUILDNUMBER --group "Azure CI"
