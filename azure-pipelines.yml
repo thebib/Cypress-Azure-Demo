@@ -42,4 +42,4 @@ steps:
     customCommand: 'run cy:info'
 
 - script: |
-          npx cypress run --record --ci-build-id $BUILD_BUILDNUMBER --group "Azure CI"
+          npx cypress run --group "Azure CI"
