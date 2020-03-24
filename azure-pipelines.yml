@@ -1,0 +1,50 @@
+# Starter pipeline
+
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+- task: Cache@2
+  inputs:
+    key: 'npm | $(Agent.OS) | package-lock.json'
+    path: '/home/vsts/.npm'
+    restoreKeys: 'npm | $(Agent.OS) | package-lock.json'
+  displayName: Cache NodeJS Packages
+
+- task: Cache@2
+  inputs:
+    key: 'cypress | $(Agent.OS) | package-lock.json'
+    path: '/home/vsts/.cache/Cypress'
+    restoreKeys: 'cypress | $(Agent.OS) | package-lock.json'
+  displayName: Cache Cypress
+- task: Npm@1
+  inputs:
+    command: 'ci'
+    workingDir: '/Cypress'
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'npm run cy:verify'
+- task: Npm@1
+  inputs:
+    command: 'custom'
+    customCommand: 'npm run cy:info'
+
+- script: |
+          npx print-env AGENT
+          npx print-env BUILD
+          npx print-env SYSTEM
+          npm run start:ci:windows &
+          npx cypress run --record --parallel --ci-build-id $BUILD_BUILDNUMBER --group "Azure CI"
