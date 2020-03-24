@@ -35,11 +35,11 @@ steps:
 - task: Npm@1
   inputs:
     command: 'custom'
-    customCommand: 'npm run cy:verify'
+    customCommand: 'run cy:verify'
 - task: Npm@1
   inputs:
     command: 'custom'
-    customCommand: 'npm run cy:info'
+    customCommand: 'run cy:info'
 
 - script: |
           npx print-env AGENT
