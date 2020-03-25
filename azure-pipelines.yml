@@ -40,6 +40,3 @@ steps:
   inputs:
     command: 'custom'
     customCommand: 'run cy:info'
-
-- script: |
-          npx cypress run
