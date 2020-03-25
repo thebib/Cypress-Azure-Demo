@@ -40,3 +40,9 @@ steps:
   inputs:
     command: 'custom'
     customCommand: 'run cy:info'
+  
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(agent.builddirectory)'
+    Contents: '**'
+    TargetFolder: '$(build.artifactstagingdirectory)'
